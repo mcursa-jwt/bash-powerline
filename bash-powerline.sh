@@ -10,6 +10,7 @@ __powerline() {
     COLOR_GIT=${COLOR_GIT:-'\[\033[0;36m\]'} # cyan
     COLOR_SUCCESS=${COLOR_SUCCESS:-'\[\033[0;32m\]'} # green
     COLOR_FAILURE=${COLOR_FAILURE:-'\[\033[0;31m\]'} # red
+    COLOR_USER=${COLOR_USER:-'\033[0;97m\]'} # white
 
     # Symbols
     SYMBOL_GIT_BRANCH=${SYMBOL_GIT_BRANCH:-⑂}
@@ -68,7 +69,7 @@ __powerline() {
         else
             local symbol="$COLOR_FAILURE $PS_SYMBOL $COLOR_RESET"
         fi
-
+        local user_host="$COLOR_USER\u@\h$COLOR_RESET"
         local cwd="$COLOR_CWD\w$COLOR_RESET"
         # Bash by default expands the content of PS1 unless promptvars is disabled.
         # We must use another layer of reference to prevent expanding any user
@@ -83,7 +84,7 @@ __powerline() {
             local git="$COLOR_GIT$(__git_info)$COLOR_RESET"
         fi
 
-        PS1="$cwd$git$symbol"
+        PS1="$user_host $cwd$git$symbol"
     }
 
     PROMPT_COMMAND="ps1${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
